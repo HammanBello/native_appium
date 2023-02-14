@@ -1,0 +1,14 @@
+{
+	"invalidUser": {
+		"username": "hamman.ahmadou@institutsaintjean.org",
+		"password": "Mimosamimosa1."
+	},
+	"invalidPassword": {
+		"username": "hamman.ahmadou@institutsaintjean.org",
+		"password": "Azertyuiop1"
+	},
+	"validUser": {
+		"username": "standard_user",
+		"password": "secret_sauce"
+	}
+}
