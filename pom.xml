@@ -7,7 +7,7 @@
 	<properties>
 		<!-- DEFAULT - If you do not pass any value with mvn test, then, this value 
 			will be used -->
-		<suiteFile>testng_emulators_pixel_3_4</suiteFile>
+		<suiteFile>testng_pixel_3</suiteFile>
 	</properties>
 
 	<build>

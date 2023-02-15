@@ -7,7 +7,7 @@
 	<listeners>
 		<listener class-name="com.appium.listeners.ListenerClass"></listener>
 		<listener
-			class-name="com.appium.listeners.AnnotationTransformer"></listener>
+				class-name="com.appium.listeners.AnnotationTransformer"></listener>
 		<listener class-name="com.appium.listeners.MethodInterceptor"></listener>
 	</listeners>
 
@@ -21,9 +21,9 @@
 		<parameter name="deviceName" value="Pixel_3_API_30"></parameter>
 		<parameter name="systemPort" value="10000" />
 		<parameter name="chromeDriverPort" value="11000" />
-<!--		<packages>-->
-<!--			<package name="com.appium.tests"></package>-->
-<!--		</packages>-->
+		<!--		<packages>-->
+		<!--			<package name="com.appium.tests"></package>-->
+		<!--		</packages>-->
 		<classes>
 			<class name="com.appium.tests.LoginTests"></class> <!-- <class name="com.appium.tests.ProductTests"></class> -->
 		</classes>
