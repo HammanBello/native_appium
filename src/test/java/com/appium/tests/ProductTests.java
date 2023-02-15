@@ -15,7 +15,7 @@ package com.appium.tests;
 import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_DESCRIPTION;
 import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE;
 import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE;
-import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCT_TITLE;
+import static com.appium.constants.FrameworkConstants.ACCOUNT_PAGE_TITLE;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_FILE;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_PASSWORD;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_USERNAME;
@@ -77,7 +77,7 @@ public class ProductTests extends BaseTest {
 		launchApp();
 	}
 
-	@FrameworkAnnotation(author = { AuthorType.NISHANT, AuthorType.GAUTAM }, category = { CategoryType.SMOKE,
+	@FrameworkAnnotation(author = { AuthorType.HAMMAN, AuthorType.HAMMAN}, category = { CategoryType.SMOKE,
 			CategoryType.REGRESSION })
 	@Test(groups = { "SMOKE", "REGRESSION" })
 	public void validateProductOnProductsPage() {
@@ -93,7 +93,7 @@ public class ProductTests extends BaseTest {
 
 		String actualProductTitle = productsPage.getTitle();
 		String expectedProductTitle = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCT_TITLE);
+				.get(ACCOUNT_PAGE_TITLE);
 		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
 
 		String actualSLBTitle = productsPage.getSLBTitle();
@@ -118,7 +118,7 @@ public class ProductTests extends BaseTest {
 
 }
 
-	@FrameworkAnnotation(author = { AuthorType.RAJAT, AuthorType.NISHANT }, category = { CategoryType.BVT,
+	@FrameworkAnnotation(author = { AuthorType.HAMMAN, AuthorType.HAMMAN}, category = { CategoryType.BVT,
 			CategoryType.REGRESSION })
 	@Test(groups = { "BVT", "REGRESSION" })
 
@@ -135,7 +135,7 @@ public class ProductTests extends BaseTest {
 
 		String actualProductTitle = productsPage.getTitle();
 		String expectedProductTitle = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCT_TITLE);
+				.get(ACCOUNT_PAGE_TITLE);
 
 		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
 

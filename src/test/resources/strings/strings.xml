@@ -3,12 +3,12 @@
 	<!-- Expected Data -->
 	<!-- Login Page -->
 	<string name="err_invalid_username_or_password"
-		value="Username and password do not match any user in this service.">
+		value="Votre courriel ou votre mot de passe est incorrect. Veuillez réessayer.">
 	</string>
 
 	<!-- Products Page -->
 	<string name="product_title" value="PRODUCTS"></string>
-	
+	<string name="account_page_title" value="Compte"></string>
 	<!-- Products Page - SLB Product Details -->
 	<string name="products_page_slb_title"
 		value="Sauce Labs Backpack"></string>

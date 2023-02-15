@@ -59,6 +59,7 @@ public class FrameworkConstants {
 	public static final String TEXT = "text";
 	public static final String LABEL = "label";
 
+	public static final long EXPLICIT_LONG_WAIT = 30;
 	public static final long EXPLICIT_WAIT = 10;
 	public static final long WAIT = 5;
 
@@ -88,7 +89,7 @@ public class FrameworkConstants {
 	/* Expected Data - START */
 	public static final String EXPECTED_DATA_XML_FILE = "strings/strings.xml";
 	public static final String EXPECTED_DATA_KEY_ERR_INAVLID_CREDENTIALS = "err_invalid_username_or_password";
-	public static final String EXPECTED_DATA_KEY_PRODUCT_TITLE = "product_title";
+	public static final String ACCOUNT_PAGE_TITLE = "account_page_title";
 	public static final String EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE = "products_page_slb_title";
 	public static final String EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_DESCRIPTION = "products_details_page_slb_description";
 	public static final String EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE = "products_page_slb_price";

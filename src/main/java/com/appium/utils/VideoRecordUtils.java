@@ -19,13 +19,14 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
-import org.testng.ITestResult;
+
 
 import static com.appium.constants.FrameworkConstants.YES;
 import com.appium.manager.DateTimeManager;
 import com.appium.manager.DriverManager;
 
 import io.appium.java_client.screenrecording.CanRecordScreen;
+import org.testng.ITestResult;
 
 public class VideoRecordUtils {
 

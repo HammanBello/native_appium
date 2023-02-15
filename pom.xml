@@ -17,8 +17,22 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<source>11</source>
+					<target>11</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.20</version>
+						</path>
+					</annotationProcessorPaths>
+<!--					<annotationProcessorPaths>-->
+<!--						<path>-->
+<!--							<groupId>org.projectlombok</groupId>-->
+<!--							<artifactId>lombok</artifactId>-->
+<!--							<version>1.18.18</version>-->
+<!--						</path>-->
+<!--					</annotationProcessorPaths>-->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -33,6 +47,7 @@
 						<!--<suiteXmlFile>${suiteFile}</suiteXmlFile>-->
 						<suiteXmlFile>src/test/resources/runners/${suiteFile}.xml</suiteXmlFile>
 					</suiteXmlFiles>
+
 				</configuration>
 			</plugin>
 
@@ -51,7 +66,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>7.4.0</version>
+			<version>7.7.0</version>
 			<!-- <version>7.3.0</version> -->
 			<!-- <scope>test</scope> -->
 		</dependency>
@@ -110,6 +125,12 @@
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-testng</artifactId>
+			<version>2.20.1</version>
 		</dependency>
 	</dependencies>
 

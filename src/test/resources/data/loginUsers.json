@@ -1,14 +1,14 @@
 {
 	"invalidUser": {
-		"username": "hamman.ahmadou@institutsaintjean.org",
-		"password": "Mimosamimosa1."
+		"username": "hammann.ahmadou@institutsaintjean.org",
+		"password": "Execution7."
 	},
 	"invalidPassword": {
 		"username": "hamman.ahmadou@institutsaintjean.org",
-		"password": "Azertyuiop1"
+		"password": "Execution7.g"
 	},
 	"validUser": {
-		"username": "standard_user",
-		"password": "secret_sauce"
+		"username": "hamman.ahmadou@institutsaintjean.org",
+		"password": "Execution7."
 	}
 }

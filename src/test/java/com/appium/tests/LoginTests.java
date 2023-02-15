@@ -1,21 +1,9 @@
-/**
- * @author Rajat Verma
- * https://www.linkedin.com/in/rajat-v-3b0685128/
- * https://github.com/rajatt95
- * https://rajatt95.github.io/
- *
- * Course: Appium Mobile Automation - Android & iOS + Frameworks + CICD (https://www.udemy.com/course/the-complete-appium-course-for-ios-and-android/)
- * Tutor: Omprakash Chavan (https://www.udemy.com/user/omprakash-chavan/)
- */
-
-/***************************************************/
-
 package com.appium.tests;
 
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_FILE;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_INVALID_PASSWORD;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_VALID_USER;
-import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCT_TITLE;
+import static com.appium.constants.FrameworkConstants.ACCOUNT_PAGE_TITLE;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_INVALID_USER;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_PASSWORD;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_USERNAME;
@@ -24,10 +12,7 @@ import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_ERR_INAV
 import java.lang.reflect.Method;
 
 import org.json.JSONObject;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import com.appium.annotations.FrameworkAnnotation;
 import com.appium.base.BaseTest;
@@ -49,7 +34,6 @@ public class LoginTests extends BaseTest {
 	@AfterClass
 	public void afterClass() {
 		closeApp();
-		launchApp();
 	}
 
 	@BeforeMethod
@@ -59,21 +43,25 @@ public class LoginTests extends BaseTest {
 		TestUtils.log().debug("******************* Test started: " + method.getName() + "*******************");
 
 		loginPage = new LoginPage();
+		if(loginPage.isModifierDisplayed()){
+			loginPage.pressModifierBtn();
+		}
 		// productsPage = new ProductsPage();
 	}
+
 
 	@AfterMethod
 	public void afterMethod(Method method) {
 		TestUtils.log().debug("*****************  ** Test ended: " + method.getName() + "*******************");
 		TestUtils.log().debug("---------------------------------------------------");
 		// closeApp();
-		// launchApp();u''&&
+		// launchApp();
 
 	}
 
-	@FrameworkAnnotation(author = { AuthorType.RAJAT, AuthorType.GAUTAM }, category = { CategoryType.SMOKE,
+	@FrameworkAnnotation(author = { AuthorType.HAMMAN }, category = { CategoryType.SMOKE,
 			CategoryType.SANITY, CategoryType.REGRESSION })
-	@Test(groups = { "SANITY", "SMOKE", "REGRESSION" })
+	@Test(groups = {"REGRESSION" },priority=2)
 	public void invalidUserName() {
 
 		JSONObject jsonObject_InvalidUser = 
@@ -84,7 +72,7 @@ public class LoginTests extends BaseTest {
 		String username = jsonObject_InvalidUser.getString(TEST_DATA_JSON_USERNAME).toString();
 		String password = jsonObject_InvalidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
 		
-		loginPage.
+		loginPage.accountIconClick().connectBtnClick().
 			enterUsername(username).
 			enterPassword(password).
 			pressLoginBtn();
@@ -92,18 +80,21 @@ public class LoginTests extends BaseTest {
 		String actualErrTxt = loginPage.getErrorTxt();
 		String expectedErrTxt = StringsManager.getStrings()
 				.get(EXPECTED_DATA_KEY_ERR_INAVLID_CREDENTIALS);
-		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Error Message for Invalid Credentials");
+		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Verfication du message d'erreur pour un mail incorrect non conforme");
+
+
 	}
 
+	@Ignore
 	@FrameworkAnnotation(author = { AuthorType.RAMEX, AuthorType.POLA }, category = { CategoryType.REGRESSION })
-	@Test(groups = { "SANITY", "BVT", "REGRESSION" })
+	@Test(groups = { "SANITY" },priority=1)
 	public void invalidPassword() {
 
-		JSONObject jsonObject_InvalidUser = 
+		JSONObject jsonObject_InvalidUser =
 				new JSONUtils()
 					.getJSONObject(TEST_DATA_JSON_FILE)
 					.getJSONObject(TEST_DATA_JSON_INVALID_PASSWORD);
-		
+
 		String username = jsonObject_InvalidUser.getString(TEST_DATA_JSON_USERNAME).toString();
 		String password = jsonObject_InvalidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
 
@@ -116,21 +107,22 @@ public class LoginTests extends BaseTest {
 		String expectedErrTxt = StringsManager.getStrings()
 				.get(EXPECTED_DATA_KEY_ERR_INAVLID_CREDENTIALS);
 
-		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Error Message for Invalid Credentials");
+		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Verification du message d'erreur pour un password incorrect ");
+
 	}
 
-	@FrameworkAnnotation(author = { AuthorType.RAJAT, AuthorType.PANKAJ }, category = { CategoryType.SANITY,
+	@FrameworkAnnotation(author = { AuthorType.RAMEX }, category = { CategoryType.SANITY,
 			CategoryType.BVT, CategoryType.REGRESSION })
-	@Test(groups = { "SANITY", "BVT", "REGRESSION" })
+	@Test(groups = { "successfulLogin" },priority=3)
 	public void successfulLogin() {
 
-		JSONObject jsonObject_InvalidUser = 
+		JSONObject jsonObject_ValidUser =
 				new JSONUtils()
 					.getJSONObject(TEST_DATA_JSON_FILE)
 					.getJSONObject(TEST_DATA_JSON_VALID_USER);
-		
-		String username = jsonObject_InvalidUser.getString(TEST_DATA_JSON_USERNAME).toString();
-		String password = jsonObject_InvalidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+
+		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
 
 		productsPage = loginPage.
 							enterUsername(username).
@@ -139,9 +131,9 @@ public class LoginTests extends BaseTest {
 
 		String actualProductTitle = productsPage.getTitle();
 		String expectedProductTitle = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCT_TITLE);
+				.get(ACCOUNT_PAGE_TITLE);
 
-		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
+		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Verification du titre de la page utilisateur");
 	}
 
 }

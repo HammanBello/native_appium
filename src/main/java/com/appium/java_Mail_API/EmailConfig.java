@@ -22,10 +22,10 @@ public class EmailConfig {
 	public static final String SERVER = "smtp.gmail.com";
 	public static final String PORT = "587";
 
-	public static final String FROM = "hambello3@gmail.com";
+	public static final String FROM = "hambello4@gmail.com";
 	public static final String PASSWORD = "Mimosamimosa1.";
 
 	/* "**********@gmail.com", */
-	public static final String[] TO = { "hambello4@gmail.com" };
+	public static final String[] TO = { "hambello3@gmail.com" };
 	public static final String SUBJECT = Project_Name;
 }

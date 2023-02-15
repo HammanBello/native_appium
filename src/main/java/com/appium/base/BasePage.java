@@ -46,6 +46,8 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import org.testng.Assert;
+import org.testng.asserts.Assertion;
 
 public class BasePage {
 //	private AppiumDriver<?> driver;
@@ -58,9 +60,27 @@ public class BasePage {
 		PageFactory.initElements(new AppiumFieldDecorator(DriverManager.getDriver()), this);
 	}
 
+	public void waitForVisibility(MobileElement mobileElement,int i) {
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), i);
+		try {
+			wait.until(ExpectedConditions.visibilityOf(mobileElement));
+
+		}
+		catch (TimeoutException | NoSuchElementException exception){
+			Assert.fail("Impossible de localiser"+mobileElement.getText());
+
+		}
+	}
 	public void waitForVisibility(MobileElement mobileElement) {
 		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), EXPLICIT_WAIT);
-		wait.until(ExpectedConditions.visibilityOf(mobileElement));
+		try {
+			wait.until(ExpectedConditions.visibilityOf(mobileElement));
+
+		}
+		catch (TimeoutException | NoSuchElementException exception){
+			Assert.fail("Impossible de localiser"+mobileElement.getText());
+
+		}
 	}
 
 //	public void scrollToElement(MobileElement from, MobileElement to) {
@@ -195,6 +215,20 @@ public class BasePage {
 
 	protected void webElementAbsent(MobileElement mobileElement, String elementName) {
 		VerificationUtils.validate(isDisplayed(mobileElement), false, elementName + " absence");
+	}
+
+	protected boolean isDisplayedMod(MobileElement element, int... time) {
+		try {
+			if (time.length > 0)
+				waitForVisibility(element, time[0]);
+			else
+				waitForVisibility(element);
+
+			return element.isDisplayed();
+		} catch (NoSuchElementException | TimeoutException exception) {
+			TestUtils.log().info(exception.getMessage());
+			return false;
+		}
 	}
 
 	private boolean isDisplayed(MobileElement element) {
