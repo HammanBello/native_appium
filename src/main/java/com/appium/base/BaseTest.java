@@ -54,41 +54,40 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 
 public class BaseTest {
-	private static String sdkPath = "C:/Users/hambe/AppData/Local/Android/Sdk";// or for windows D:/Android/adt-bundle-windows-x86_64-20140702/sdk/
-	private static String adbPath = sdkPath+ "platform-tools/adb.exe";
-//	private static String emulatorPath = sdkPath + "tools" + File.separator + "emulator";
-private static String emulatorPath = "C:/Users/hambe/AppData/Local/Android/Sdk/emulator";
+//	private static String sdkPath = "C:/Users/hambe/AppData/Local/Android/Sdk";// or for windows D:/Android/adt-bundle-windows-x86_64-20140702/sdk/
+//	private static String adbPath = sdkPath+ "platform-tools/adb.exe";
+////	private static String emulatorPath = sdkPath + "tools" + File.separator + "emulator";
+//private static String emulatorPath = "C:/Users/hambe/AppData/Local/Android/Sdk/emulator";
 
 	private static AppiumDriverLocalService server;
 
 	/**
 	 * Starts an emulator for the provided AVD name
 	 *
-	 * @param nameOfAVD
 	 */
-	public static void launchEmulator(String nameOfAVD) {
-		System.out.println("Starting emulator for '" + nameOfAVD + "' ...");
-		String[] aCommand = new String[] { emulatorPath,"/emulator.exe", " -avd ", nameOfAVD, " -no-snapshot-load" };
-		try {
-			Process process = new ProcessBuilder(aCommand).start();
-			process.waitFor(180, TimeUnit.SECONDS);
-			System.out.println("Emulator launched successfully!");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void closeEmulator() {
-		System.out.println("Killing emulator...");
-		String[] aCommand = new String[] { adbPath, " emu", " kill" };
-		try {
-			Process process = new ProcessBuilder(aCommand).start();
-//			process.waitFor(6, TimeUnit.SECONDS);
-			System.out.println("Emulator closed successfully!");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void launchEmulator(String nameOfAVD) {
+//		System.out.println("Starting emulator for '" + nameOfAVD + "' ...");
+//		String[] aCommand = new String[] { emulatorPath,"/emulator.exe", " -avd ", nameOfAVD, " -no-snapshot-load" };
+//		try {
+//			Process process = new ProcessBuilder(aCommand).start();
+//			process.waitFor(180, TimeUnit.SECONDS);
+//			System.out.println("Emulator launched successfully!");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public static void closeEmulator() {
+//		System.out.println("Killing emulator...");
+//		String[] aCommand = new String[] { adbPath, " emu", " kill" };
+//		try {
+//			Process process = new ProcessBuilder(aCommand).start();
+////			process.waitFor(6, TimeUnit.SECONDS);
+//			System.out.println("Emulator closed successfully!");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	@BeforeMethod
 	public void beforeMethod() {
 		VideoRecordUtils.startRecording();

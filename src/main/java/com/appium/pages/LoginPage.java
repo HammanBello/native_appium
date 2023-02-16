@@ -77,8 +77,15 @@ public class LoginPage extends BasePage {
 	private MobileElement msgErrorTxt;
 
 	public LoginPage acceptCookies() {
-
+try {
 		click(acceptCookies, acceptCookiesTxt);
+	}
+
+		catch (NoSuchElementException | TimeoutException exception){
+		ExtentLogger.fail("Le boutton de connexion n'est pas visible");
+		Assert.fail("Le boutton de connexion n'est pas visible");
+
+	}
 		return this;
 	}
 	public LoginPage accountIconClick() {
@@ -102,6 +109,8 @@ public class LoginPage extends BasePage {
 
 		return this;
 	}
+
+
 
 	public LoginPage connectBtnClick() {
 		try {

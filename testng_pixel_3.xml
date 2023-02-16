@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Test Suite: Emulator- Pixel 3"  thread-count="5"
-	   parallel="tests" verbose="4">
+<suite name="Test Suite: Emulator- Pixel 3" verbose="4">
 
 	<!-- systemPort and chromeDriverPort must be unique for Parallel execution -->
 	<listeners>
 		<listener class-name="com.appium.listeners.ListenerClass"></listener>
-		<listener
-			class-name="com.appium.listeners.AnnotationTransformer"></listener>
+		<listener class-name="com.appium.listeners.AnnotationTransformer"></listener>
 		<listener class-name="com.appium.listeners.MethodInterceptor"></listener>
 	</listeners>
 
@@ -25,7 +23,8 @@
 <!--			<package name="com.appium.tests"></package>-->
 <!--		</packages>-->
 		<classes>
-			<class name="com.appium.tests.LoginTests"></class> <!-- <class name="com.appium.tests.ProductTests"></class> -->
+			<class name="com.appium.tests.LoginTests"></class>
+			 <class name="com.appium.tests.ProductTests"></class>
 		</classes>
 	</test>
 </suite> 

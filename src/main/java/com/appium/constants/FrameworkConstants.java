@@ -23,7 +23,14 @@ public class FrameworkConstants {
 	private FrameworkConstants() {
 	}
 
+
 	public static final String PROJECT_LOCATION = System.getProperty("user.dir");
+
+
+	public static final String TESTDATA_SHEET_PATH = PROJECT_LOCATION.replace("\\","/") + "/src/main/resources/";
+
+	public static final String ADDARTICLES_SHEET_NAME = "ADD_ARTICLES_DATA.xlsx";
+
 	public static final String RESOURCES_MAIN_PATH = PROJECT_LOCATION + "/src/main/resources/";
 	public static final String RESOURCES_TEST_PATH = PROJECT_LOCATION + "/src/test/resources/";
 

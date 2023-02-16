@@ -5,7 +5,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
-		<!-- DEFAULT - If you do not pass any value with mvn test, then, this value 
+		<!-- DEFAULT - If you do not pass any value with mvn test, then, this value
 			will be used -->
 		<suiteFile>testng_pixel_3</suiteFile>
 	</properties>
@@ -40,14 +40,23 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
-					<!-- Suite testng xml file to consider for test execution -->
+<!--					 Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
 						<!-- <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile> -->
 						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
 						<!--<suiteXmlFile>${suiteFile}</suiteXmlFile>-->
 						<suiteXmlFile>src/test/resources/runners/${suiteFile}.xml</suiteXmlFile>
 					</suiteXmlFiles>
-
+<!--					<properties>-->
+<!--						<property>-->
+<!--							<name>usedefaultlisteners</name>-->
+<!--							<value>false</value> &lt;!&ndash; disabling default listeners is optional &ndash;&gt;-->
+<!--						</property>-->
+<!--						<property>-->
+<!--							<name>listener</name>-->
+<!--							<value>com.appium.listeners.ListenerClass,com.appium.listeners.AnnotationTransformer,com.appium.listeners.MethodInterceptor</value>-->
+<!--						</property>-->
+<!--					</properties>-->
 				</configuration>
 			</plugin>
 
@@ -55,6 +64,13 @@
 	</build>
 
 	<dependencies>
+
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.1</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
 		<dependency>

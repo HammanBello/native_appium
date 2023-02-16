@@ -20,15 +20,18 @@ import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_FILE;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_PASSWORD;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_USERNAME;
 import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_VALID_USER;
+import static java.lang.Float.parseFloat;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
+import com.appium.constants.FrameworkConstants;
+import com.appium.manager.DriverManager;
+import io.appium.java_client.MobileElement;
+import org.aspectj.lang.annotation.Before;
 import org.json.JSONObject;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import com.appium.annotations.FrameworkAnnotation;
 import com.appium.base.BaseTest;
@@ -47,6 +50,7 @@ public class ProductTests extends BaseTest {
 
 	LoginPage loginPage;
 	ProductsPage productsPage;
+	boolean b = false;
 	SettingsPage settingsPage;
 	ProductDetailsPage productDetailsPage;
 
@@ -54,9 +58,20 @@ public class ProductTests extends BaseTest {
 
 	@AfterClass
 	public void afterClass() {
-//		closeApp();
+		closeApp();
 //		launchApp();
 	}
+	@BeforeClass
+	public void beforeClass() {
+//		closeApp();
+		launchApp();
+	}
+	@BeforeMethod(firstTimeOnly = true)
+public void beforeMethod2(Method method) {
+b = true;}
+
+
+
 
 	@BeforeMethod
 	public void beforeMethod(Method method) {
@@ -65,6 +80,7 @@ public class ProductTests extends BaseTest {
 		TestUtils.log().debug("******************* Test started: " + method.getName() + "*******************");
 
 		loginPage = new LoginPage();
+//		launchApp();
 		// productsPage = new ProductsPage();
 	}
 
@@ -73,89 +89,147 @@ public class ProductTests extends BaseTest {
 
 		TestUtils.log().debug("******************* Test ended: " + method.getName() + "*******************");
 		TestUtils.log().debug("---------------------------------------------------");
-		closeApp();
-		launchApp();
+//		closeApp();
+//		launchApp();
 	}
 
-	@FrameworkAnnotation(author = { AuthorType.HAMMAN, AuthorType.HAMMAN}, category = { CategoryType.SMOKE,
-			CategoryType.REGRESSION })
-	@Test(groups = { "SMOKE", "REGRESSION" })
-	public void validateProductOnProductsPage() {
-		
-		JSONObject jsonObject_ValidUser = 
-				new JSONUtils()
+	@DataProvider
+	public Object[][] getProductDataForAdd() {
+		String s = "addarticles";
+		Object productsData[][] = TestUtils.getTestData(s);
+		return productsData;
+	}
+	@FrameworkAnnotation(author = { AuthorType.HAMMAN}, category = { CategoryType.SMOKE, CategoryType.REGRESSION })
+	@Test(groups = { "SMOKE", "REGRESSION" },priority = 0,dataProvider = "getProductDataForAdd")
+	public void validateProductOnProductsPage(String nom, String qte) {
+		float Z = parseFloat(qte);
+		int X = Math.round(Z);
+if(b){
+	JSONObject jsonObject_ValidUser =
+			new JSONUtils()
 					.getJSONObject(TEST_DATA_JSON_FILE)
 					.getJSONObject(TEST_DATA_JSON_VALID_USER);
 
-		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
-		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
-		productsPage = loginPage.login(username, password);
+	String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+	String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+	productsPage = 	loginPage.accountIconClick().connectBtnClick().
+			enterUsername(username).
+			enterPassword(password).
+			pressLoginBtn();
+	productsPage.accountBackBtnClick().researchInputTextClick();
+	b = false;
+}
+		productsPage.researchInputClick().enterProductName(nom);
+		productsPage.isSearchTitleDisplayed();
+		String actualSearchResult ="null";
+		String xpathElements = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView[1]";
+		List<MobileElement> Resultats = DriverManager.getDriver().findElementsByXPath(xpathElements);
 
-		String actualProductTitle = productsPage.getTitle();
-		String expectedProductTitle = StringsManager.getStrings()
-				.get(ACCOUNT_PAGE_TITLE);
-		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
+		if (Resultats.size()==0)
+			VerificationUtils.validateResponse(false,"Echec de la vérification de la présence du mot clé, car aucun element trouvé");;
+		for ( int i = 0; i < Resultats.size(); ++i) {
+			VerificationUtils.validateResponse(productsPage.getSearchResult(Resultats.get(i),nom),"Vérification de la présence du mot clé "+nom+" dans "+productsPage.getElementText(Resultats.get(i)));;
+		}
 
-		String actualSLBTitle = productsPage.getSLBTitle();
-		String expectedSLBTitle = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE);
-		VerificationUtils.validate(actualSLBTitle, expectedSLBTitle, "Title for Sauce Labs Backpack");
-
-		String actualSLBPrice = productsPage.getSLBPrice();
-		String expectedSLBPrice = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE);
-		VerificationUtils.validate(actualSLBPrice, expectedSLBPrice, "Price for Sauce Labs Backpack");
+//		String expectedProductTitle = StringsManager.getStrings()
+//				.get(ACCOUNT_PAGE_TITLE);
+//		VerificationUtils.validate(actualSearchResult, expectedProductTitle, "Product Title");
+//
+//		String actualSLBTitle = productsPage.getSLBTitle();
+//		String expectedSLBTitle = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE);
+//		VerificationUtils.validate(actualSLBTitle, expectedSLBTitle, "Title for Sauce Labs Backpack");
+//
+//		String actualSLBPrice = productsPage.getSLBPrice();
+//		String expectedSLBPrice = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE);
+//		VerificationUtils.validate(actualSLBPrice, expectedSLBPrice, "Price for Sauce Labs Backpack");
 
 //		settingsPage = productsPage.pressSettingsBtn();
 //		loginPage = settingsPage.pressLogoutBtn();
-	
-		settingsPage = productsPage.
-				getMenuPage().
-				pressSettingsBtn();
-		loginPage = settingsPage.pressLogoutBtn();
 
-		Assert.fail("*******************************Failing intentionally");
+//		Assert.fail("*******************************Failing intentionally");
 
-}
-
-	@FrameworkAnnotation(author = { AuthorType.HAMMAN, AuthorType.HAMMAN}, category = { CategoryType.BVT,
-			CategoryType.REGRESSION })
-	@Test(groups = { "BVT", "REGRESSION" })
-
-	public void validateProductOnProductDetailsPage() {
-	
-		JSONObject jsonObject_ValidUser = 
-				new JSONUtils()
-					.getJSONObject(TEST_DATA_JSON_FILE)
-					.getJSONObject(TEST_DATA_JSON_VALID_USER);
-
-		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
-		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
-		productsPage = loginPage.login(username, password);
-
-		String actualProductTitle = productsPage.getTitle();
-		String expectedProductTitle = StringsManager.getStrings()
-				.get(ACCOUNT_PAGE_TITLE);
-
-		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
-
-		productDetailsPage = productsPage.pressSLBTitle();
-
-		String actualSLBTitle = productDetailsPage.getSLBTitle();
-		String expectedSLBTitle = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE);
-		VerificationUtils.validate(actualSLBTitle, expectedSLBTitle, "Title for Sauce Labs Backpack");
-
-		String actualSLBDescription = productDetailsPage.getSLBTxt();
-		String expectedSLBDescription = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_DESCRIPTION);
-		VerificationUtils.validate(actualSLBDescription, expectedSLBDescription,
-				"Description for Sauce Labs Backpack");
-		productDetailsPage.scrollToSLBPrice();
-
-		String actualSLBPrice = productDetailsPage.getSLBPrice();
-		String expectedSLBPrice = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE);
-		VerificationUtils.validate(actualSLBPrice, expectedSLBPrice, "Price for Sauce Labs Backpack");
 	}
+
+//	@FrameworkAnnotation(author = { AuthorType.HAMMAN}, category = { CategoryType.SMOKE, CategoryType.REGRESSION })
+//	@Test(groups = { "SMOKE", "REGRESSION" })
+//	public void validateProductOnProductsPage() {
+//
+//		JSONObject jsonObject_ValidUser =
+//				new JSONUtils()
+//					.getJSONObject(TEST_DATA_JSON_FILE)
+//					.getJSONObject(TEST_DATA_JSON_VALID_USER);
+//
+//		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+//		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+//		productsPage = loginPage.login(username, password);
+//
+//		String actualProductTitle = productsPage.getTitle();
+//		String expectedProductTitle = StringsManager.getStrings()
+//				.get(ACCOUNT_PAGE_TITLE);
+//		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
+//
+//		String actualSLBTitle = productsPage.getSLBTitle();
+//		String expectedSLBTitle = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE);
+//		VerificationUtils.validate(actualSLBTitle, expectedSLBTitle, "Title for Sauce Labs Backpack");
+//
+//		String actualSLBPrice = productsPage.getSLBPrice();
+//		String expectedSLBPrice = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE);
+//		VerificationUtils.validate(actualSLBPrice, expectedSLBPrice, "Price for Sauce Labs Backpack");
+//
+////		settingsPage = productsPage.pressSettingsBtn();
+////		loginPage = settingsPage.pressLogoutBtn();
+//
+//		settingsPage = productsPage.
+//				getMenuPage().
+//				pressSettingsBtn();
+//		loginPage = settingsPage.pressLogoutBtn();
+//
+////		Assert.fail("*******************************Failing intentionally");
+//
+//}
+
+//	@FrameworkAnnotation(author = { AuthorType.HAMMAN, AuthorType.HAMMAN}, category = { CategoryType.BVT,
+//			CategoryType.REGRESSION })
+//	@Test(groups = { "BVT", "REGRESSION" })
+//
+//	public void validateProductOnProductDetailsPage() {
+//
+//		JSONObject jsonObject_ValidUser =
+//				new JSONUtils()
+//					.getJSONObject(TEST_DATA_JSON_FILE)
+//					.getJSONObject(TEST_DATA_JSON_VALID_USER);
+//
+//		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+//		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+//		productsPage = loginPage.login(username, password);
+//
+//		String actualProductTitle = productsPage.getTitle();
+//		String expectedProductTitle = StringsManager.getStrings()
+//				.get(ACCOUNT_PAGE_TITLE);
+//
+//		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Product Title");
+//
+//		productDetailsPage = productsPage.pressSLBTitle();
+//
+//		String actualSLBTitle = productDetailsPage.getSLBTitle();
+//		String expectedSLBTitle = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE);
+//		VerificationUtils.validate(actualSLBTitle, expectedSLBTitle, "Title for Sauce Labs Backpack");
+//
+//		String actualSLBDescription = productDetailsPage.getSLBTxt();
+//		String expectedSLBDescription = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_DESCRIPTION);
+//		VerificationUtils.validate(actualSLBDescription, expectedSLBDescription,
+//				"Description for Sauce Labs Backpack");
+//		productDetailsPage.scrollToSLBPrice();
+//
+//		String actualSLBPrice = productDetailsPage.getSLBPrice();
+//		String expectedSLBPrice = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE);
+//		VerificationUtils.validate(actualSLBPrice, expectedSLBPrice, "Price for Sauce Labs Backpack");
+//	}
 }

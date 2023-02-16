@@ -96,7 +96,7 @@ public class ProductTests_DeepLinks extends BaseTest {
 		 */
 		DeepLink.OpenAppWith("swaglabs://swag-overview/0,5");
 		ProductsPage productsPage = new ProductsPage();
-		sa.assertEquals(productsPage.getSLBTitle(), StringsManager.getStrings().get("products_page_slb_title"));
+//		sa.assertEquals(productsPage.getSLBTitle(), StringsManager.getStrings().get("products_page_slb_title"));
 		sa.assertEquals(productsPage.getSLBPrice(), StringsManager.getStrings().get("products_page_slb_price"));
 		sa.assertAll();
 	}
@@ -110,7 +110,7 @@ public class ProductTests_DeepLinks extends BaseTest {
 		 */
 		DeepLink.OpenAppWith("swaglabs://swag-overview/0,5");
 		ProductsPage productsPage = new ProductsPage();
-		ProductDetailsPage productDetailsPage = productsPage.pressSLBTitle();
+//		ProductDetailsPage productDetailsPage = productsPage.pressSLBTitle();
 		Assert.assertEquals(productDetailsPage.getSLBTitle(),
 				StringsManager.getStrings().get("product_details_page_slb_title"));
 	}

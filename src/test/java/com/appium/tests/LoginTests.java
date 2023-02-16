@@ -61,7 +61,7 @@ public class LoginTests extends BaseTest {
 
 	@FrameworkAnnotation(author = { AuthorType.HAMMAN }, category = { CategoryType.SMOKE,
 			CategoryType.SANITY, CategoryType.REGRESSION })
-	@Test(groups = {"REGRESSION" },priority=2)
+	@Test(groups = {"REGRESSION" },priority=1)
 	public void invalidUserName() {
 
 		JSONObject jsonObject_InvalidUser = 
@@ -87,7 +87,7 @@ public class LoginTests extends BaseTest {
 
 	@Ignore
 	@FrameworkAnnotation(author = { AuthorType.RAMEX, AuthorType.POLA }, category = { CategoryType.REGRESSION })
-	@Test(groups = { "SANITY" },priority=1)
+	@Test(groups = { "SANITY" },priority=2)
 	public void invalidPassword() {
 
 		JSONObject jsonObject_InvalidUser =
