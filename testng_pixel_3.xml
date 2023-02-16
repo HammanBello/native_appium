@@ -4,6 +4,8 @@
 
 	<!-- systemPort and chromeDriverPort must be unique for Parallel execution -->
 	<listeners>
+
+		<listener class-name="com.appium.listeners.AllureReportListener"></listener>
 		<listener class-name="com.appium.listeners.ListenerClass"></listener>
 		<listener class-name="com.appium.listeners.AnnotationTransformer"></listener>
 		<listener class-name="com.appium.listeners.MethodInterceptor"></listener>
