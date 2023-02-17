@@ -17,11 +17,18 @@ import java.util.Date;
 
 public class AllureReportListener implements ITestListener {
 
+    private String testResult;
     private static String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
     }
 
+    private String getTestResult() {
+        return testResult;
+    }
 
+    private void setTestResult(String testResult) {
+        this.testResult = testResult;
+    }
     public void saveScreen( ) {
         Allure.addAttachment("screenshot", new ByteArrayInputStream(((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES)));}
 

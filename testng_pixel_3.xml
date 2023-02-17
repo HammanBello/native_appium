@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Test Suite: Emulator- Pixel 3" verbose="4">
+<suite name="Test Suite: Emulator- Pixel 3" thread-count="5"
+	   parallel="tests" verbose="4">
 
 	<!-- systemPort and chromeDriverPort must be unique for Parallel execution -->
 	<listeners>
@@ -16,11 +17,12 @@
 		<parameter name="platformName" value="Android"></parameter>
 		<!-- <parameter name="platformVersion" value="11.0"></parameter> -->
 		<parameter name="udid" value="emulator-5554"></parameter>
-		<!-- Please give proper value as deviceName value is used as avd (to start 
+		<!-- Please give proper value as deviceName value is used as avd (to start
 			Emulator automatically) -->
 		<parameter name="deviceName" value="Pixel_3_API_30"></parameter>
 		<parameter name="systemPort" value="10000" />
 		<parameter name="chromeDriverPort" value="11000" />
+		<parameter name="testCategory" value="SANITY" />
 <!--		<packages>-->
 <!--			<package name="com.appium.tests"></package>-->
 <!--		</packages>-->
@@ -29,4 +31,22 @@
 			 <class name="com.appium.tests.ProductTests"></class>
 		</classes>
 	</test>
+<!--	<test name="Tests on Emulator: Pixel 2">-->
+<!--		<parameter name="emulator" value="true"></parameter>-->
+<!--		<parameter name="platformName" value="Android"></parameter>-->
+<!--		&lt;!&ndash; <parameter name="platformVersion" value="11.0"></parameter> &ndash;&gt;-->
+<!--		<parameter name="udid" value="emulator-5556"></parameter>-->
+<!--		&lt;!&ndash; Please give proper value as deviceName value is used as avd (to start-->
+<!--			Emulator automatically) &ndash;&gt;-->
+<!--		<parameter name="deviceName" value="Pixel_2_API_28"></parameter>-->
+<!--		<parameter name="systemPort" value="18000" />-->
+<!--		<parameter name="chromeDriverPort" value="19000" />-->
+<!--		&lt;!&ndash;		<packages>&ndash;&gt;-->
+<!--		&lt;!&ndash;			<package name="com.appium.tests"></package>&ndash;&gt;-->
+<!--		&lt;!&ndash;		</packages>&ndash;&gt;-->
+<!--		<classes>-->
+<!--			<class name="com.appium.tests.LoginTests"></class>-->
+<!--&lt;!&ndash;			<class name="com.appium.tests.ProductTests"></class>&ndash;&gt;-->
+<!--		</classes>-->
+<!--	</test>-->
 </suite> 

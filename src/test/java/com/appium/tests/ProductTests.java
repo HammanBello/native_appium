@@ -50,7 +50,7 @@ public class ProductTests extends BaseTest {
 
 	LoginPage loginPage;
 	ProductsPage productsPage;
-	boolean b = false;
+	boolean b = true;
 	SettingsPage settingsPage;
 	ProductDetailsPage productDetailsPage;
 
@@ -66,9 +66,7 @@ public class ProductTests extends BaseTest {
 //		closeApp();
 		launchApp();
 	}
-	@BeforeMethod(firstTimeOnly = true)
-public void beforeMethod2(Method method) {
-b = true;}
+
 
 
 
@@ -105,19 +103,7 @@ b = true;}
 		float Z = parseFloat(qte);
 		int X = Math.round(Z);
 if(b){
-	JSONObject jsonObject_ValidUser =
-			new JSONUtils()
-					.getJSONObject(TEST_DATA_JSON_FILE)
-					.getJSONObject(TEST_DATA_JSON_VALID_USER);
-
-	String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
-	String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
-	productsPage = 	loginPage.accountIconClick().connectBtnClick().
-			enterUsername(username).
-			enterPassword(password).
-			pressLoginBtn();
-	productsPage.accountBackBtnClick().researchInputTextClick();
-	b = false;
+login();
 }
 		productsPage.researchInputClick().enterProductName(nom);
 		productsPage.isSearchTitleDisplayed();
@@ -150,6 +136,22 @@ if(b){
 
 //		Assert.fail("*******************************Failing intentionally");
 
+	}
+
+	private void login() {
+		JSONObject jsonObject_ValidUser =
+				new JSONUtils()
+						.getJSONObject(TEST_DATA_JSON_FILE)
+						.getJSONObject(TEST_DATA_JSON_VALID_USER);
+
+		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+		productsPage = 	loginPage.accountIconClick().connectBtnClick().
+				enterUsername(username).
+				enterPassword(password).
+				pressLoginBtn();
+		productsPage.accountBackBtnClick().researchInputTextClick();
+		b = false;
 	}
 
 //	@FrameworkAnnotation(author = { AuthorType.HAMMAN}, category = { CategoryType.SMOKE, CategoryType.REGRESSION })

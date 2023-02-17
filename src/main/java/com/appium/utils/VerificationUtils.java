@@ -12,13 +12,14 @@
 
 package com.appium.utils;
 
+import io.qameta.allure.Step;
 import org.testng.Assert;
 
 import static com.appium.constants.FrameworkConstants.ASSERTION_FOR;
 import com.appium.reports.ExtentLogger;
 
 public class VerificationUtils {
-
+	@Step("{message}")
 	public static void validate(Object actual, Object expected, String message) {
 
 		try {

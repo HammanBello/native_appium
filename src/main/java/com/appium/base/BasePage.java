@@ -1,14 +1,4 @@
-/**
- * @author Rajat Verma
- * https://www.linkedin.com/in/rajat-v-3b0685128/
- * https://github.com/rajatt95
- * https://rajatt95.github.io/
- *
- * Course: Appium Mobile Automation - Android & iOS + Frameworks + CICD (https://www.udemy.com/course/the-complete-appium-course-for-ios-and-android/)
- * Tutor: Omprakash Chavan (https://www.udemy.com/user/omprakash-chavan/)
- */
 
-/***************************************************/
 
 package com.appium.base;
 
@@ -58,6 +48,7 @@ public class BasePage {
 //		PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
 
 		PageFactory.initElements(new AppiumFieldDecorator(DriverManager.getDriver()), this);
+//		PageFactory.initElements(DriverManager.getDriver(), this);
 	}
 
 	public void waitForVisibility(MobileElement mobileElement,int i) {

@@ -7,6 +7,7 @@
 	<properties>
 		<!-- DEFAULT - If you do not pass any value with mvn test, then, this value
 			will be used -->
+		<aspectj.version>1.9.6</aspectj.version>
 		<suiteFile>testng_pixel_3</suiteFile>
 	</properties>
 
@@ -34,12 +35,23 @@
 <!--						</path>-->
 <!--					</annotationProcessorPaths>-->
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+					<argLine>
+						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+					</argLine>
 <!--					 Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
 						<!-- <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile> -->
@@ -57,7 +69,27 @@
 <!--							<value>com.appium.listeners.ListenerClass,com.appium.listeners.AnnotationTransformer,com.appium.listeners.MethodInterceptor</value>-->
 <!--						</property>-->
 <!--					</properties>-->
+<!--					<properties>-->
+<!--						<property>-->
+<!--							<name>listener</name>-->
+<!--							<value>io.qameta.allure.testng.AllureTestNg</value>-->
+<!--						</property>-->
+<!--					</properties>-->
+<!--					<systemProperties>-->
+<!--						<property>-->
+<!--							<name>allure.results.directory</name>-->
+<!--							<value>${project.build.directory}/allure-results</value>-->
+<!--						</property>-->
+<!--					</systemProperties>-->
+
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 		</plugins>
@@ -148,6 +180,11 @@
 			<artifactId>allure-testng</artifactId>
 			<version>2.20.1</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.seleniumhq.selenium</groupId>-->
+<!--			<artifactId>selenium-support</artifactId>-->
+<!--			<version>4.8.0</version>-->
+<!--		</dependency>-->
 	</dependencies>
 
 </project>

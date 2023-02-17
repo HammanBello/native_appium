@@ -163,7 +163,7 @@ public class BaseTest {
 
 	@AfterTest
 	public void afterTest() {
-		DriverManager.getDriver().quit();
+//		DriverManager.getDriver().quit();
 	}
 
 	public void closeApp() {
@@ -192,6 +192,8 @@ public class BaseTest {
 
 	@AfterSuite
 	public void afterSuite() {
+		DriverManager.getDriver().quit();
+
 		server.stop();
 //		closeEmulator();
 		TestUtils.log().debug("Appium Server stopped.............");

@@ -18,9 +18,11 @@ import com.appium.reports.ExtentLogger;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public class LoginPage extends BasePage {
 
@@ -135,6 +137,7 @@ try {
 		click(dismissButton, dismissButtonTxt);
 		return this;
 	}
+	@Step("Saisie de \"{userName}\" dans le champ du courriel")
 	public LoginPage enterUsername(String userName) {
 try{
 		sendKeys(txtFldUsername, userName, txtFldUsernameTxt);}
@@ -145,6 +148,9 @@ catch (NoSuchElementException | TimeoutException exception){
 }
 		return this;
 	}
+
+
+	@Step("Saisie de \"{password}\" dans le champ du mot de passe")
 
 	public LoginPage enterPassword(String password) {
 		// sendKeys(txtFldPassword, password);
@@ -164,6 +170,7 @@ catch (NoSuchElementException | TimeoutException exception){
 
 		return isDisplayedMod(modiferButton,3);
 	}
+	@Step("Appuie sur le boutton de login")
 
 	public ProductsPage pressLoginBtn() {
 		// click(btnLogin);

@@ -11,6 +11,9 @@ import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_ERR_INAV
 
 import java.lang.reflect.Method;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.json.JSONObject;
 import org.testng.annotations.*;
 
@@ -29,13 +32,18 @@ public class LoginTests extends BaseTest {
 
 	LoginPage loginPage;
 	ProductsPage productsPage;
+	boolean b = true;
 	JSONObject loginUsers;
 
 	@AfterClass
 	public void afterClass() {
 		closeApp();
 	}
-
+	@BeforeClass
+	public void beforeClass() {
+//		closeApp();
+		launchApp();
+	}
 	@BeforeMethod
 	public void beforeMethod(Method method) {
 
@@ -56,12 +64,14 @@ public class LoginTests extends BaseTest {
 		TestUtils.log().debug("---------------------------------------------------");
 		// closeApp();
 		// launchApp();
+		b = false;
 
 	}
 
-	@FrameworkAnnotation(author = { AuthorType.HAMMAN }, category = { CategoryType.SMOKE,
-			CategoryType.SANITY, CategoryType.REGRESSION })
-	@Test(groups = {"REGRESSION" },priority=1)
+	@FrameworkAnnotation(author = { AuthorType.HAMMAN }, category = { CategoryType.SMOKE, CategoryType.REGRESSION })
+	@Test(groups = {"REGRESSION" },priority=2)
+	@Description("Invalid Login Scenario with wrong username.")
+	@Story("TEST DE CONNEXION CARREFOUR")
 	public void invalidUserName() {
 
 		JSONObject jsonObject_InvalidUser = 
@@ -71,10 +81,12 @@ public class LoginTests extends BaseTest {
 		
 		String username = jsonObject_InvalidUser.getString(TEST_DATA_JSON_USERNAME).toString();
 		String password = jsonObject_InvalidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
-		
-		loginPage.accountIconClick().connectBtnClick().
-			enterUsername(username).
-			enterPassword(password).
+		if(b)
+			first_click();
+
+		pola(username);
+
+		loginPage.enterPassword(password).
 			pressLoginBtn();
 
 		String actualErrTxt = loginPage.getErrorTxt();
@@ -85,55 +97,65 @@ public class LoginTests extends BaseTest {
 
 	}
 
-	@Ignore
-	@FrameworkAnnotation(author = { AuthorType.RAMEX, AuthorType.POLA }, category = { CategoryType.REGRESSION })
-	@Test(groups = { "SANITY" },priority=2)
-	public void invalidPassword() {
+//
+//	@FrameworkAnnotation(author = { AuthorType.RAMEX, AuthorType.POLA }, category = { CategoryType.REGRESSION })
+//	@Test(groups = { "SANITY" },priority=1)
+//	public void invalidPassword() {
+//
+//		JSONObject jsonObject_InvalidUser =
+//				new JSONUtils()
+//					.getJSONObject(TEST_DATA_JSON_FILE)
+//					.getJSONObject(TEST_DATA_JSON_INVALID_PASSWORD);
+//
+//		String username = jsonObject_InvalidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+//		String password = jsonObject_InvalidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+//		if(b)
+//			first_click();
+//		loginPage.
+//			enterUsername(username).
+//			enterPassword(password).
+//			pressLoginBtn();
+//
+//		String actualErrTxt = loginPage.getErrorTxt();
+//		String expectedErrTxt = StringsManager.getStrings()
+//				.get(EXPECTED_DATA_KEY_ERR_INAVLID_CREDENTIALS);
+//
+//		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Verification du message d'erreur pour un password incorrect ");
+//
+//	}
+//
+//	@FrameworkAnnotation(author = { AuthorType.RAMEX }, category = { CategoryType.SANITY,
+//			CategoryType.BVT, CategoryType.REGRESSION })
+//	@Test(groups = { "successfulLogin" },priority=3)
+//	public void successfulLogin() {
+//
+//		JSONObject jsonObject_ValidUser =
+//				new JSONUtils()
+//					.getJSONObject(TEST_DATA_JSON_FILE)
+//					.getJSONObject(TEST_DATA_JSON_VALID_USER);
+//
+//		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
+//		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
+//		if(b)
+//			first_click();
+//		productsPage = loginPage.
+//							enterUsername(username).
+//							enterPassword(password).
+//							pressLoginBtn();
+//
+//		String actualProductTitle = productsPage.getTitle();
+//		String expectedProductTitle = StringsManager.getStrings()
+//				.get(ACCOUNT_PAGE_TITLE);
+//
+//		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Verification du titre de la page utilisateur");
+//	}
 
-		JSONObject jsonObject_InvalidUser =
-				new JSONUtils()
-					.getJSONObject(TEST_DATA_JSON_FILE)
-					.getJSONObject(TEST_DATA_JSON_INVALID_PASSWORD);
 
-		String username = jsonObject_InvalidUser.getString(TEST_DATA_JSON_USERNAME).toString();
-		String password = jsonObject_InvalidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
-
-		loginPage.
-			enterUsername(username).
-			enterPassword(password).
-			pressLoginBtn();
-
-		String actualErrTxt = loginPage.getErrorTxt();
-		String expectedErrTxt = StringsManager.getStrings()
-				.get(EXPECTED_DATA_KEY_ERR_INAVLID_CREDENTIALS);
-
-		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Verification du message d'erreur pour un password incorrect ");
-
+	public void first_click(){
+		loginPage.accountIconClick().connectBtnClick();
+		b=false;
 	}
-
-	@FrameworkAnnotation(author = { AuthorType.RAMEX }, category = { CategoryType.SANITY,
-			CategoryType.BVT, CategoryType.REGRESSION })
-	@Test(groups = { "successfulLogin" },priority=3)
-	public void successfulLogin() {
-
-		JSONObject jsonObject_ValidUser =
-				new JSONUtils()
-					.getJSONObject(TEST_DATA_JSON_FILE)
-					.getJSONObject(TEST_DATA_JSON_VALID_USER);
-
-		String username = jsonObject_ValidUser.getString(TEST_DATA_JSON_USERNAME).toString();
-		String password = jsonObject_ValidUser.getString(TEST_DATA_JSON_PASSWORD).toString();
-
-		productsPage = loginPage.
-							enterUsername(username).
-							enterPassword(password).
-							pressLoginBtn();
-
-		String actualProductTitle = productsPage.getTitle();
-		String expectedProductTitle = StringsManager.getStrings()
-				.get(ACCOUNT_PAGE_TITLE);
-
-		VerificationUtils.validate(actualProductTitle, expectedProductTitle, "Verification du titre de la page utilisateur");
+	public  void pola(String s ){
+		loginPage.enterUsername(s);
 	}
-
 }
