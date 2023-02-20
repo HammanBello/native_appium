@@ -12,32 +12,11 @@
 
 package com.appium.tests;
 
-import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_DESCRIPTION;
-import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE;
-import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_TITLE;
-import static com.appium.constants.FrameworkConstants.ACCOUNT_PAGE_TITLE;
-import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_FILE;
-import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_PASSWORD;
-import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_USERNAME;
-import static com.appium.constants.FrameworkConstants.TEST_DATA_JSON_VALID_USER;
-import static java.lang.Float.parseFloat;
-
-import java.lang.reflect.Method;
-import java.util.List;
-
-import com.appium.constants.FrameworkConstants;
-import com.appium.manager.DriverManager;
-import io.appium.java_client.MobileElement;
-import org.aspectj.lang.annotation.Before;
-import org.json.JSONObject;
-import org.testng.Assert;
-import org.testng.annotations.*;
-
 import com.appium.annotations.FrameworkAnnotation;
 import com.appium.base.BaseTest;
 import com.appium.enums.AuthorType;
 import com.appium.enums.CategoryType;
-import com.appium.manager.StringsManager;
+import com.appium.manager.DriverManager;
 import com.appium.pages.LoginPage;
 import com.appium.pages.ProductDetailsPage;
 import com.appium.pages.ProductsPage;
@@ -45,6 +24,16 @@ import com.appium.pages.SettingsPage;
 import com.appium.utils.JSONUtils;
 import com.appium.utils.TestUtils;
 import com.appium.utils.VerificationUtils;
+import io.appium.java_client.MobileElement;
+import io.qameta.allure.Step;
+import org.json.JSONObject;
+import org.testng.annotations.*;
+
+import java.lang.reflect.Method;
+import java.util.List;
+
+import static com.appium.constants.FrameworkConstants.*;
+import static java.lang.Float.parseFloat;
 
 public class ProductTests extends BaseTest {
 
@@ -110,12 +99,10 @@ login();
 		String actualSearchResult ="null";
 		String xpathElements = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView[1]";
 		List<MobileElement> Resultats = DriverManager.getDriver().findElementsByXPath(xpathElements);
-
+		cyclingVerifications(Resultats, nom);
 		if (Resultats.size()==0)
 			VerificationUtils.validateResponse(false,"Echec de la vérification de la présence du mot clé, car aucun element trouvé");;
-		for ( int i = 0; i < Resultats.size(); ++i) {
-			VerificationUtils.validateResponse(productsPage.getSearchResult(Resultats.get(i),nom),"Vérification de la présence du mot clé "+nom+" dans "+productsPage.getElementText(Resultats.get(i)));;
-		}
+
 
 //		String expectedProductTitle = StringsManager.getStrings()
 //				.get(ACCOUNT_PAGE_TITLE);
@@ -234,4 +221,11 @@ login();
 //				.get(EXPECTED_DATA_KEY_PRODUCTS_PAGE_SLB_PRICE);
 //		VerificationUtils.validate(actualSLBPrice, expectedSLBPrice, "Price for Sauce Labs Backpack");
 //	}
+@Step("Verification de la présence du mot clé")
+public void cyclingVerifications(List<MobileElement> Resultats, String nom ){
+		for ( int i = 0; i < Resultats.size(); ++i) {
+			VerificationUtils.validateResponse(productsPage.getSearchResult(Resultats.get(i),nom),"Vérification de la présence du mot clé "+nom+" dans "+productsPage.getElementText(Resultats.get(i)));;
+		}
+
+	}
 }

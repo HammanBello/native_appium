@@ -11,6 +11,8 @@ import static com.appium.constants.FrameworkConstants.EXPECTED_DATA_KEY_ERR_INAV
 
 import java.lang.reflect.Method;
 
+import com.appium.manager.DriverManager;
+import io.appium.java_client.InteractsWithApps;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
@@ -69,7 +71,7 @@ public class LoginTests extends BaseTest {
 	}
 
 	@FrameworkAnnotation(author = { AuthorType.HAMMAN }, category = { CategoryType.SMOKE, CategoryType.REGRESSION })
-	@Test(groups = {"REGRESSION" },priority=2)
+	@Test(groups = {"REGRESSION" },priority=2, description = "Invalid Login Scenario with wrong username.")
 	@Description("Invalid Login Scenario with wrong username.")
 	@Story("TEST DE CONNEXION CARREFOUR")
 	public void invalidUserName() {
@@ -93,7 +95,6 @@ public class LoginTests extends BaseTest {
 		String expectedErrTxt = StringsManager.getStrings()
 				.get(EXPECTED_DATA_KEY_ERR_INAVLID_CREDENTIALS);
 		VerificationUtils.validate(actualErrTxt, expectedErrTxt, "Verfication du message d'erreur pour un mail incorrect non conforme");
-
 
 	}
 

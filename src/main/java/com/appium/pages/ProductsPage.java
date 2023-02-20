@@ -21,6 +21,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
@@ -87,7 +88,7 @@ public class ProductsPage extends BasePage {
 		}
 		return this;
 	}
-
+	@Step("Appuie sur le champs de recherche")
 	public ProductsPage researchInputClick() {
 		try {click(researchInput, researchInputTxt);}
 
@@ -97,7 +98,7 @@ public class ProductsPage extends BasePage {
 		}
 		return this;
 	}
-
+	@Step("Saisie de \"{productName}\" dans le champ de recherche")
 	public ProductsPage enterProductName(String productName) {
 		try{
 			sendKeys(researchInput, productName,researchInputTxt );
@@ -125,6 +126,7 @@ public class ProductsPage extends BasePage {
 		// return getAttribute(productTitle, TEXT);
 		return getElementText(accountPageTitle);
 	}
+
 
 	public Boolean getSearchResult(MobileElement element,String searchedTxt) {
 

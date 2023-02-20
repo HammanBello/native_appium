@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Test Suite: Emulator- Pixel 3" thread-count="5"
-	   parallel="tests" verbose="4">
+<suite name="Test Suite: Emulator- Pixel 3"  verbose="4">
 
 	<!-- systemPort and chromeDriverPort must be unique for Parallel execution -->
 	<listeners>
@@ -19,7 +18,7 @@
 		<parameter name="udid" value="emulator-5554"></parameter>
 		<!-- Please give proper value as deviceName value is used as avd (to start
 			Emulator automatically) -->
-		<parameter name="deviceName" value="Pixel_3_API_30"></parameter>
+		<parameter name="deviceName" value="Pixel_3_API_28"></parameter>
 		<parameter name="systemPort" value="10000" />
 		<parameter name="chromeDriverPort" value="11000" />
 		<parameter name="testCategory" value="SANITY" />
